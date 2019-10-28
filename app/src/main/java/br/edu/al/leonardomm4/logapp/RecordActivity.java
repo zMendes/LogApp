@@ -6,19 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class RecordActivity extends AppCompatActivity {
 
-    Button audio_button;
+    Button audilog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_record);
 
-        audio_button = findViewById(R.id.audio);
+        audilog = findViewById(R.id.audiolog);
 
-        audio_button.setOnClickListener(view ->{
-            Intent intent = new Intent(this, RecordActivity.class);
+
+        audilog.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AudioLogActivity.class);
             startActivity(intent);
         });
     }

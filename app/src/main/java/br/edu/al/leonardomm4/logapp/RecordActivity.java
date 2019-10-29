@@ -6,13 +6,17 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -25,6 +29,8 @@ public class RecordActivity extends AppCompatActivity {
     Button audilog;
     Button tag;
     Button record;
+    Chronometer chrono;
+
     private MediaRecorder mRecorder;
     private static String mFileName;
     boolean recording = false;
@@ -39,7 +45,11 @@ public class RecordActivity extends AppCompatActivity {
         audilog = findViewById(R.id.audiolog);
         tag = findViewById(R.id.tag);
 
-        mFileName= Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() +"teskt.3gp";
+        chrono = findViewById(R.id.chronometer);
+        File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp");
+        directory.mkdirs();
+
+        mFileName= Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp"+ "/" + UUID.randomUUID().toString() +"teskt.3gp";
 
 
 
@@ -61,11 +71,13 @@ public class RecordActivity extends AppCompatActivity {
                     mRecorder.release();
                     invert();
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
-                    System.out.println(mFileName + "  FILE NAMEEEEEEEEEEEEEEEEEEEEE");
+                    chrono.stop();
+                    record.setBackgroundColor(Color.parseColor("#000000"));
 
                 }
                 else {
                     mRecorder = new MediaRecorder();
+                    chrono.setBase(SystemClock.elapsedRealtime());
                     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
@@ -73,6 +85,8 @@ public class RecordActivity extends AppCompatActivity {
                     try {
                         mRecorder.prepare();
                         mRecorder.start();
+                        chrono.start();
+                        record.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     } catch (IOException e) {
                         Log.e("AudioRecording", "prepare() failed");
                     }

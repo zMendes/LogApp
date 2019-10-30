@@ -74,10 +74,11 @@ public class RecordActivity extends AppCompatActivity {
                     invert();
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
-                    record.setBackgroundColor(Color.parseColor("#000000"));
+                    record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
 
                 }
                 else {
+
                     mRecorder = new MediaRecorder();
                     chrono.setBase(SystemClock.elapsedRealtime());
                     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -88,7 +89,7 @@ public class RecordActivity extends AppCompatActivity {
                         mRecorder.prepare();
                         mRecorder.start();
                         chrono.start();
-                        record.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                        record.setImageResource(R.drawable.ic_fiber_manual_record_black_24dp);
                     } catch (IOException e) {
                         Log.e("AudioRecording", "prepare() failed");
                     }

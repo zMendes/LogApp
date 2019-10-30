@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button audio_button;
+    ImageView audio_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

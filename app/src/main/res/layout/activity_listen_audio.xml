@@ -6,18 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ListenAudio">
 
-    <Button
-        android:id="@+id/plaey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play/Pause"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="218dp" />
-
-    <TextView
+    <ImageView
+        android:id="@+id/play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/oi"
-        android:hint="oi"/>
+        android:layout_marginTop="324dp"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

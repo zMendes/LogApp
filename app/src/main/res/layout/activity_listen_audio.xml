@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AudioLogActivity">
+    tools:context=".ListenAudio">
 
+    <Button
+        android:id="@+id/plaey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play/Pause"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="218dp" />
 
-    <ListView
-        android:id="@+id/lista"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
+        android:layout_height="wrap_content"
+        android:id="@+id/oi"
+        android:hint="oi"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

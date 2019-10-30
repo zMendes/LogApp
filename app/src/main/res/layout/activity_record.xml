@@ -6,39 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".RecordActivity">
 
-    <Button
+
+    <ImageView
         android:id="@+id/record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Record"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="341dp" />
-
-    <Button
-        android:id="@+id/tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tags"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/audiolog"
-        tools:layout_editor_absoluteY="137dp" />
+        app:layout_constraintVertical_bias="0.499"
+        android:src="@drawable/ic_fiber_smart_record_black_24dp" />
 
-    <Button
+
+    <ImageView
+        android:id="@+id/tag"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="24dp"
+        android:background="#00000000"
+        android:src="@drawable/ic_control_point_black_24dp"
+        android:tint="#FFC800"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/audiolog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tag"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:text="Audios"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="215dp" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:src="@drawable/ic_volume_up_black_24dp" />
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="@android:integer/config_longAnimTime"
-        app:layout_constraintTop_toBottomOf="@+id/tag"
         app:layout_editor_absoluteY="300dp"
 
         />

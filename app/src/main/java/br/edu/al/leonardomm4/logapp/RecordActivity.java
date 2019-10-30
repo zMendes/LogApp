@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -26,9 +28,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class RecordActivity extends AppCompatActivity {
 
     private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
-    Button audilog;
-    Button tag;
-    Button record;
+    ImageView audilog;
+    ImageView tag;
+    ImageView record;
     Chronometer chrono;
 
     private MediaRecorder mRecorder;

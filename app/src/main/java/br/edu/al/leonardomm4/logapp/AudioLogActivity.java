@@ -21,8 +21,8 @@ public class AudioLogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_log);
-        ListView listView = (ListView) findViewById(R.id.lista);
-        lista = new ArrayList<String>();
+        ListView listView = findViewById(R.id.lista);
+        lista = new ArrayList<>();
 
         File directory = Environment.getExternalStorageDirectory();
         file = new File( directory + "/logApp" );

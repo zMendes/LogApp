@@ -1,26 +1,24 @@
 package br.edu.al.leonardomm4.logapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.Date;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -28,6 +26,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class RecordActivity extends AppCompatActivity {
 
     private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
+
+    EditText title;
     ImageView audilog;
     ImageView tag;
     ImageView record;
@@ -43,6 +43,7 @@ public class RecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        title = findViewById(R.id.title);
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
         tag = findViewById(R.id.tag);
@@ -51,7 +52,7 @@ public class RecordActivity extends AppCompatActivity {
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp");
         directory.mkdirs();
 
-        mFileName= Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp"+ "/" + UUID.randomUUID().toString() +"teskt.3gp";
+        Date date = new Date();
 
 
 
@@ -66,6 +67,12 @@ public class RecordActivity extends AppCompatActivity {
 
 
         record.setOnClickListener(view -> {
+            if (title.getText().toString().isEmpty()) {
+                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + date.toString() + "audio.3gp";
+            }
+            else {
+                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString()+ ".3gp";
+            }
             if (checkPermissions()){
                 //start recording
                 if (recording){

@@ -3,6 +3,7 @@ package br.edu.al.leonardomm4.logapp;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Date;
 
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -32,6 +34,10 @@ public class RecordActivity extends AppCompatActivity {
     ImageView tag;
     ImageView record;
     Chronometer chrono;
+
+    private AudioDatabase audioDatabase;
+    private Audio audio;
+
 
     private MediaRecorder mRecorder;
     private static String mFileName;
@@ -53,7 +59,7 @@ public class RecordActivity extends AppCompatActivity {
         directory.mkdirs();
 
         Date date = new Date();
-
+        audioDatabase = AudioDatabase.getInstance(RecordActivity.this);
 
 
         audilog.setOnClickListener(view -> {
@@ -82,6 +88,9 @@ public class RecordActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
+                    audio = new Audio(0, "test29", "Entrevista", "Pains", "0:21");
+                    new InsertTask(RecordActivity.this, audio).execute();
+
 
                 }
                 else {
@@ -114,6 +123,8 @@ public class RecordActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     @Override
@@ -133,6 +144,7 @@ public class RecordActivity extends AppCompatActivity {
         }
     }
 
+
     private void openDialog() {
         TagDialog tag = new TagDialog();
         tag.show(getSupportFragmentManager(), "Tag");
@@ -150,4 +162,38 @@ public class RecordActivity extends AppCompatActivity {
     public void invert(){
         recording = !recording;
     }
+
+    private void setResult(Audio audio, int flag){
+        setResult(flag,new Intent().putExtra("audio",audio));
+        finish();
+    }
+    private static class InsertTask extends AsyncTask<Void,Void,Boolean> {
+
+        private WeakReference<RecordActivity> activityReference;
+        private Audio audio ;
+
+        // only retain a weak reference to the activity
+        InsertTask(RecordActivity context, Audio audio) {
+            activityReference = new WeakReference<>(context);
+            this.audio= audio;
+        }
+
+        // doInBackground methods runs on a worker thread
+        @Override
+        protected Boolean doInBackground(Void... objs) {
+            activityReference.get().audioDatabase.dao().insertAudio(audio);
+            return true;
+        }
+
+        // onPostExecute runs on main thread
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool){
+                activityReference.get().setResult(audio,1);
+            }
+        }
+
+    }
+
 }
+

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
+import java.util.LinkedList;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -35,10 +36,11 @@ public class RecordActivity extends AppCompatActivity {
     ImageView record;
     Chronometer chrono;
     ImageView change_mode;
+    String mode = "Entrevista";
 
+    LinkedList<Audio> audios = new LinkedList<>();
 
     private AudioDatabase audioDatabase;
-    private Audio audio;
 
 
     private MediaRecorder mRecorder;
@@ -66,7 +68,6 @@ public class RecordActivity extends AppCompatActivity {
 
         Date date = new Date();
         audioDatabase = AudioDatabase.getInstance(RecordActivity.this);
-        String tag_string = "";
 
 
         audilog.setOnClickListener(view -> {
@@ -74,9 +75,7 @@ public class RecordActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        tag.setOnClickListener(view -> {
-            openDialog();
-        });
+        tag.setOnClickListener(view -> openDialog());
 
 
         record.setOnClickListener(view -> {
@@ -94,7 +93,9 @@ public class RecordActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
-
+                    for (Audio audio: audios) {
+                        new InsertTask(RecordActivity.this, audio).execute();
+                    }
 
                 } else {
 
@@ -124,11 +125,15 @@ public class RecordActivity extends AppCompatActivity {
         change_mode.setOnClickListener(view ->{
             if (entrevista==true){
                 entrevista = false;
+                mode = "Teste";
                 change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
+                Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }
             else{
+                mode = "Entrevista";
                 entrevista = true;
                 change_mode.setImageResource(R.drawable.ic_autorenew_black_24dp);
+                Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }
 
 
@@ -211,8 +216,10 @@ public class RecordActivity extends AppCompatActivity {
 
     public void dialogOk(String tag) {
         Toast.makeText(this, tag + chrono.getText(), Toast.LENGTH_SHORT).show();
-        audio = new Audio(0, title.getText().toString(), "Entrevista", tag, chrono.getText().toString());
-        new InsertTask(RecordActivity.this, audio).execute();
+
+        Audio audio = new Audio(0, title.getText().toString(), mode, tag, chrono.getText().toString());
+        audios.add(audio);
+        //new InsertTask(RecordActivity.this, audio).execute();
     }
 
 }

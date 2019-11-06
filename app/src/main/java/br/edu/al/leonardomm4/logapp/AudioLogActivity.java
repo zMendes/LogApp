@@ -26,9 +26,7 @@ public class AudioLogActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.lista);
         List<String> lista = new ArrayList<>();
         audioDatabase = AudioDatabase.getInstance(AudioLogActivity.this);
-        for (Audio audio:audioDatabase.dao().getAudioList()){
-            System.out.println(audio.getAudioName() + " " + audio.getTag() + audio.getTimestamp());
-        }
+
         File directory = Environment.getExternalStorageDirectory();
         file = new File( directory + "/logApp" );
         File list[] = file.listFiles();

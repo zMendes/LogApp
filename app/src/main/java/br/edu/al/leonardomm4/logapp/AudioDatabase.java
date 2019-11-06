@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 public abstract class AudioDatabase extends RoomDatabase {
     private String DB_NAME = "audio.db";
 
-    public abstract  DAO dao();
+    public abstract AudioDAO dao();
 
     private static  AudioDatabase audioDB;
 

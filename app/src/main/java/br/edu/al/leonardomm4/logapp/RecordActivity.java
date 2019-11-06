@@ -31,9 +31,10 @@ public class RecordActivity extends AppCompatActivity {
 
     EditText title;
     ImageView audilog;
-    ImageView tag;
+    ImageView tag2;
     ImageView record;
     Chronometer chrono;
+
 
     private AudioDatabase audioDatabase;
     private Audio audio;
@@ -52,14 +53,15 @@ public class RecordActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
-        tag = findViewById(R.id.tag);
+        tag2 = findViewById(R.id.tag);
 
         chrono = findViewById(R.id.chronometer);
-        File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp");
+        File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp");
         directory.mkdirs();
 
         Date date = new Date();
         audioDatabase = AudioDatabase.getInstance(RecordActivity.this);
+        String tag_string = "";
 
 
         audilog.setOnClickListener(view -> {
@@ -67,7 +69,7 @@ public class RecordActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        tag.setOnClickListener(view -> {
+        tag2.setOnClickListener(view -> {
             openDialog();
         });
 
@@ -75,25 +77,21 @@ public class RecordActivity extends AppCompatActivity {
         record.setOnClickListener(view -> {
             if (title.getText().toString().isEmpty()) {
                 mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + date.toString() + "audio.3gp";
+            } else {
+                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
             }
-            else {
-                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString()+ ".3gp";
-            }
-            if (checkPermissions()){
+            if (checkPermissions()) {
                 //start recording
-                if (recording){
+                if (recording) {
                     mRecorder.stop();
                     mRecorder.release();
                     invert();
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
-                    audio = new Audio(0, "test29", "Entrevista", "Pains", "0:21");
-                    new InsertTask(RecordActivity.this, audio).execute();
 
 
-                }
-                else {
+                } else {
 
                     mRecorder = new MediaRecorder();
                     chrono.setBase(SystemClock.elapsedRealtime());
@@ -112,17 +110,11 @@ public class RecordActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_LONG).show();
                     invert();
                 }
-            }
-            else{
+            } else {
                 requestPermissions();
             }
 
         });
-
-
-
-
-
 
 
     }
@@ -131,13 +123,13 @@ public class RecordActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_AUDIO_PERMISSION_CODE:
-                if (grantResults.length> 0) {
+                if (grantResults.length > 0) {
                     boolean permissionToRecord = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean permissionToStore = grantResults[1] ==  PackageManager.PERMISSION_GRANTED;
+                    boolean permissionToStore = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                     if (permissionToRecord && permissionToStore) {
                         Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(),"Permission Denied", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -146,9 +138,11 @@ public class RecordActivity extends AppCompatActivity {
 
 
     private void openDialog() {
-        TagDialog tag = new TagDialog();
+        TagDialog tag = new TagDialog(this);
+
         tag.show(getSupportFragmentManager(), "Tag");
     }
+
     private void requestPermissions() {
         ActivityCompat.requestPermissions(RecordActivity.this, new String[]{RECORD_AUDIO, WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
     }
@@ -159,23 +153,24 @@ public class RecordActivity extends AppCompatActivity {
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void invert(){
+    public void invert() {
         recording = !recording;
     }
 
-    private void setResult(Audio audio, int flag){
-        setResult(flag,new Intent().putExtra("audio",audio));
+    private void setResult(Audio audio, int flag) {
+        setResult(flag, new Intent().putExtra("audio", audio));
         finish();
     }
-    private static class InsertTask extends AsyncTask<Void,Void,Boolean> {
+
+    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
         private WeakReference<RecordActivity> activityReference;
-        private Audio audio ;
+        private Audio audio;
 
         // only retain a weak reference to the activity
         InsertTask(RecordActivity context, Audio audio) {
             activityReference = new WeakReference<>(context);
-            this.audio= audio;
+            this.audio = audio;
         }
 
         // doInBackground methods runs on a worker thread
@@ -188,11 +183,18 @@ public class RecordActivity extends AppCompatActivity {
         // onPostExecute runs on main thread
         @Override
         protected void onPostExecute(Boolean bool) {
-            if (bool){
-                activityReference.get().setResult(audio,1);
+            if (bool) {
+                activityReference.get().setResult(audio, 1);
             }
         }
 
+    }
+
+
+    public void dialogOk(String tag) {
+        Toast.makeText(this, tag + chrono.getText(), Toast.LENGTH_SHORT).show();
+        audio = new Audio(0, title.getText().toString(), "Entrevista", tag, chrono.getText().toString());
+        new InsertTask(RecordActivity.this, audio).execute();
     }
 
 }

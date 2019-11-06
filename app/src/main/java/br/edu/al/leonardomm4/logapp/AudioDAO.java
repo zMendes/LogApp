@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Dao
-public interface DAO {
+public interface AudioDAO {
 
     @Query("SELECT * FROM audio")
     List<Audio> getAudioList();
@@ -20,4 +20,7 @@ public interface DAO {
 
     @Delete
     void deleteAudio(Audio audio);
+
+    @Query("SELECT * FROM audio WHERE audioName = :name")
+    List<Audio> getTags(String name);
 }

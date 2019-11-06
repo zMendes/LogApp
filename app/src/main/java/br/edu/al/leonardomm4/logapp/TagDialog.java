@@ -5,13 +5,21 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.util.Objects;
 
 public class TagDialog extends AppCompatDialogFragment {
+
+    private String selected = "";
+    private  RecordActivity recordActivity;
+
+    public TagDialog(RecordActivity recordActivity){
+        this.recordActivity = recordActivity;
+
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,10 +35,13 @@ public class TagDialog extends AppCompatDialogFragment {
                 .setTitle("Tags")
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
                 }).setPositiveButton("ok", (dialogInterface, i) -> {
-            Toast.makeText(getActivity(), "Tag adicionada com sucesso", Toast.LENGTH_SHORT).show();
+                    recordActivity.dialogOk(selected);
+
         });
-        builder.setSingleChoiceItems(tags, 0, null);
+        builder.setSingleChoiceItems(tags, 0, (a, i) -> selected = tags[i]);
         return builder.create();
     }
+
+
 
 }

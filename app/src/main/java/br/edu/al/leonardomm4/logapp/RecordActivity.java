@@ -32,10 +32,12 @@ public class RecordActivity extends AppCompatActivity {
     ImageView tag;
     ImageView record;
     Chronometer chrono;
+    ImageView change_mode;
 
     private MediaRecorder mRecorder;
     private static String mFileName;
     boolean recording = false;
+    boolean entrevista = true;
 
 
     @Override
@@ -47,6 +49,7 @@ public class RecordActivity extends AppCompatActivity {
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
         tag = findViewById(R.id.tag);
+        change_mode = findViewById(R.id.change_mode);
 
         chrono = findViewById(R.id.chronometer);
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator   + "logApp");
@@ -109,6 +112,19 @@ public class RecordActivity extends AppCompatActivity {
             }
 
         });
+
+        change_mode.setOnClickListener(view ->{
+            if (entrevista==true){
+                entrevista = false;
+                change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
+            }
+            else{
+                entrevista = true;
+                change_mode.setImageResource(R.drawable.ic_autorenew_black_24dp);
+            }
+
+
+                });
 
 
 

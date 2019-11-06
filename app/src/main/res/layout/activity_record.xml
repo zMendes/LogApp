@@ -62,4 +62,14 @@
         app:layout_constraintBottom_toTopOf="@+id/record"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/change_mode"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/audiolog"
+        app:layout_constraintStart_toStartOf="@+id/audiolog"
+        app:srcCompat="@drawable/ic_autorenew_black_24dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,9 +31,10 @@ public class RecordActivity extends AppCompatActivity {
 
     EditText title;
     ImageView audilog;
-    ImageView tag2;
+    ImageView tag;
     ImageView record;
     Chronometer chrono;
+    ImageView change_mode;
 
 
     private AudioDatabase audioDatabase;
@@ -43,6 +44,7 @@ public class RecordActivity extends AppCompatActivity {
     private MediaRecorder mRecorder;
     private static String mFileName;
     boolean recording = false;
+    boolean entrevista = true;
 
 
     @Override
@@ -53,7 +55,10 @@ public class RecordActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
-        tag2 = findViewById(R.id.tag);
+
+        tag = findViewById(R.id.tag);
+        change_mode = findViewById(R.id.change_mode);
+
 
         chrono = findViewById(R.id.chronometer);
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp");
@@ -69,7 +74,7 @@ public class RecordActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        tag2.setOnClickListener(view -> {
+        tag.setOnClickListener(view -> {
             openDialog();
         });
 
@@ -115,6 +120,19 @@ public class RecordActivity extends AppCompatActivity {
             }
 
         });
+
+        change_mode.setOnClickListener(view ->{
+            if (entrevista==true){
+                entrevista = false;
+                change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
+            }
+            else{
+                entrevista = true;
+                change_mode.setImageResource(R.drawable.ic_autorenew_black_24dp);
+            }
+
+
+                });
 
 
     }

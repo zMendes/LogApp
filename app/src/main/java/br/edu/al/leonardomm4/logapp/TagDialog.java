@@ -29,7 +29,9 @@ public class TagDialog extends AppCompatDialogFragment {
 
         View view = inflater.inflate(R.layout.layout_tag, null);
 
-        String[] tags = new String[]{"Pains", "Gains", "Explicação", "Teste"};
+        String[] interview= new String[]{"Pains", "Gains", "Jobs"};
+        String[] test = new String[]{"Likes", "Critics", "??", "??"};
+
 
         builder.setView(view)
                 .setTitle("Tags")
@@ -38,7 +40,8 @@ public class TagDialog extends AppCompatDialogFragment {
                     recordActivity.dialogOk(selected);
 
         });
-        builder.setSingleChoiceItems(tags, 0, (a, i) -> selected = tags[i]);
+        if (recordActivity.entrevista){ builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);}
+        else{  builder.setSingleChoiceItems(test, 0, (a, i) -> selected = test[i]);}
         return builder.create();
     }
 

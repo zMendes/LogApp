@@ -51,7 +51,7 @@ public class TagAdapter extends BaseAdapter {
         TextView timestamp = itemView.findViewById(R.id.timestamp);
         Audio audio     = audios.get(i);
         tag.setText(audio.getTag());
-        timestamp.setText(audio.getTimestamp() + " seg");
+        timestamp.setText("00:"+audio.getTimestamp() + " seg");
 
         itemView.setOnClickListener(view1 ->{
             if (mediaPlayer.isPlaying()){

@@ -33,19 +33,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="60dp"
         android:background="#00000000"
         android:src="@drawable/ic_control_point_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toEndOf="@+id/audiolog"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/audiolog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="500dp"
         android:src="@drawable/ic_format_list_bulleted_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,9 +64,10 @@
         android:id="@+id/change_mode"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/audiolog"
-        app:layout_constraintStart_toStartOf="@+id/audiolog"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="500dp"
+        app:layout_constraintStart_toEndOf="@+id/audiolog"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_autorenew_black_24dp" />
 
 

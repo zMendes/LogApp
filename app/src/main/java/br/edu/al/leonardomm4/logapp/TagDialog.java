@@ -30,7 +30,7 @@ public class TagDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_tag, null);
 
         String[] interview= new String[]{"Pains", "Gains", "Jobs"};
-        String[] test = new String[]{"Likes", "Critics", "??", "??"};
+        String[] test = new String[]{"Likes", "Critics", "Ideas", "Doubtsx'"};
 
 
         builder.setView(view)

@@ -123,7 +123,7 @@ public class RecordActivity extends AppCompatActivity {
         });
 
         change_mode.setOnClickListener(view ->{
-            if (entrevista==true){
+            if (entrevista){
                 entrevista = false;
                 mode = "Teste";
                 change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
@@ -215,7 +215,7 @@ public class RecordActivity extends AppCompatActivity {
 
 
     public void dialogOk(String tag) {
-        Toast.makeText(this, " Tag adicionada." + (SystemClock.elapsedRealtime()-chrono.getBase()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
 
         Audio audio = new Audio(0, title.getText().toString(), mode, tag, ""+((SystemClock.elapsedRealtime()- chrono.getBase())/1000));
         audios.add(audio);

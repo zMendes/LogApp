@@ -37,7 +37,7 @@ public class RecordActivity extends AppCompatActivity {
     Chronometer chrono;
     ImageView change_mode;
     String mode = "Entrevista";
-
+    String timestamp;
     LinkedList<Audio> audios = new LinkedList<>();
 
     private AudioDatabase audioDatabase;
@@ -162,6 +162,7 @@ public class RecordActivity extends AppCompatActivity {
 
     private void openDialog() {
         TagDialog tag = new TagDialog(this);
+        timestamp = ""+ ((SystemClock.elapsedRealtime()- chrono.getBase())/1000);
 
         tag.show(getSupportFragmentManager(), "Tag");
     }
@@ -203,9 +204,9 @@ public class RecordActivity extends AppCompatActivity {
     public void dialogOk(String tag) {
         Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
 
-        Audio audio = new Audio(0, title.getText().toString(), mode, tag, ""+((SystemClock.elapsedRealtime()- chrono.getBase())/1000));
+        Audio audio = new Audio(0, title.getText().toString(), mode, tag, timestamp);
         audios.add(audio);
-        //new InsertTask(RecordActivity.this, audio).execute();
+            //new InsertTask(RecordActivity.this, audio).execute();
     }
 
 }

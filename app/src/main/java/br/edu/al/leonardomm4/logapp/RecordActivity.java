@@ -200,8 +200,8 @@ public class RecordActivity extends AppCompatActivity {
     }
 
 
-    public void dialogOk(String tag) {
-        Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
+    public void dialogOk(String tag, String texto) {
+        Toast.makeText(this, " Tag adicionada." + texto, Toast.LENGTH_SHORT).show();
 
         Audio audio = new Audio(0, title.getText().toString(), mode, tag, ""+((SystemClock.elapsedRealtime()- chrono.getBase())/1000));
         audios.add(audio);

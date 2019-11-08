@@ -5,13 +5,14 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.util.Objects;
 
 public class TagDialog extends AppCompatDialogFragment {
-
+    EditText fname;
     private String selected = "";
     private  RecordActivity recordActivity;
 
@@ -29,6 +30,9 @@ public class TagDialog extends AppCompatDialogFragment {
 
         View view = inflater.inflate(R.layout.layout_tag, null);
 
+        fname = view.findViewById(R.id.fname);
+
+
         String[] interview= new String[]{"Pains", "Gains", "Jobs"};
         String[] test = new String[]{"Likes", "Critics", "Ideas", "Doubts"};
 
@@ -37,7 +41,7 @@ public class TagDialog extends AppCompatDialogFragment {
                 .setTitle("Tags")
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
                 }).setPositiveButton("ok", (dialogInterface, i) -> {
-                    recordActivity.dialogOk(selected);
+                    recordActivity.dialogOk(selected, fname.getText().toString());
 
         });
         if (recordActivity.entrevista){ builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);}

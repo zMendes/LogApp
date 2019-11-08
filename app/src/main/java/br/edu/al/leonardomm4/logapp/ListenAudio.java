@@ -51,7 +51,7 @@ public class ListenAudio extends AppCompatActivity {
             System.out.println(audio.getAudioName() +" " + audio.getTag()+ "  " + audio.getTimestamp());
         }
 
-        TagAdapter adapter = new TagAdapter(this, lista);
+        TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer);
 
         //ArrayAdapter<   Audio> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lista);
         listView.setAdapter(adapter); //Set all the file in the list.
@@ -65,6 +65,7 @@ public class ListenAudio extends AppCompatActivity {
         }
 
         play.setOnClickListener(view -> {
+            mediaPlayer.seekTo(0);
             mediaPlayer.start();
         });
     }

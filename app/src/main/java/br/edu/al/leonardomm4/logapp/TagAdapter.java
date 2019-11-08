@@ -2,6 +2,7 @@ package br.edu.al.leonardomm4.logapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,14 @@ public class TagAdapter extends BaseAdapter {
 
     List<Audio> audios;
 
+    MediaPlayer mediaPlayer;
+
     private static LayoutInflater inflater= null;
 
-    public  TagAdapter(Activity context, List<Audio> audios){
+    public  TagAdapter(Activity context, List<Audio> audios, MediaPlayer mediaPlayer){
         this.audios = audios;
         this.context = context;
+        this.mediaPlayer = mediaPlayer;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -47,7 +51,18 @@ public class TagAdapter extends BaseAdapter {
         TextView timestamp = itemView.findViewById(R.id.timestamp);
         Audio audio     = audios.get(i);
         tag.setText(audio.getTag());
-        timestamp.setText(audio.getTimestamp());
+        timestamp.setText("00:"+audio.getTimestamp() + " seg");
+
+        itemView.setOnClickListener(view1 ->{
+            if (mediaPlayer.isPlaying()){
+            mediaPlayer.seekTo(Integer.parseInt(audio.getTimestamp())*1000);
+            }
+            else {
+                mediaPlayer.start();
+                mediaPlayer.seekTo(Integer.parseInt(audio.getTimestamp())*1000);
+            }
+        });
+
         return  itemView;
     }
 }

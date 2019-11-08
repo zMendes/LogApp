@@ -123,7 +123,7 @@ public class RecordActivity extends AppCompatActivity {
         });
 
         change_mode.setOnClickListener(view ->{
-            if (entrevista==true){
+            if (entrevista){
                 entrevista = false;
                 mode = "Teste";
                 change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
@@ -180,44 +180,30 @@ public class RecordActivity extends AppCompatActivity {
         recording = !recording;
     }
 
-    private void setResult(Audio audio, int flag) {
-        setResult(flag, new Intent().putExtra("audio", audio));
-        finish();
-    }
 
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
         private WeakReference<RecordActivity> activityReference;
         private Audio audio;
 
-        // only retain a weak reference to the activity
         InsertTask(RecordActivity context, Audio audio) {
             activityReference = new WeakReference<>(context);
             this.audio = audio;
         }
 
-        // doInBackground methods runs on a worker thread
         @Override
         protected Boolean doInBackground(Void... objs) {
             activityReference.get().audioDatabase.dao().insertAudio(audio);
             return true;
         }
 
-        // onPostExecute runs on main thread
-        @Override
-        protected void onPostExecute(Boolean bool) {
-            if (bool) {
-                activityReference.get().setResult(audio, 1);
-            }
-        }
-
     }
 
 
     public void dialogOk(String tag) {
-        Toast.makeText(this, tag + chrono.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
 
-        Audio audio = new Audio(0, title.getText().toString(), mode, tag, chrono.getText().toString());
+        Audio audio = new Audio(0, title.getText().toString(), mode, tag, ""+((SystemClock.elapsedRealtime()- chrono.getBase())/1000));
         audios.add(audio);
         //new InsertTask(RecordActivity.this, audio).execute();
     }

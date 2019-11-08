@@ -180,35 +180,21 @@ public class RecordActivity extends AppCompatActivity {
         recording = !recording;
     }
 
-    private void setResult(Audio audio, int flag) {
-        setResult(flag, new Intent().putExtra("audio", audio));
-        finish();
-    }
 
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
         private WeakReference<RecordActivity> activityReference;
         private Audio audio;
 
-        // only retain a weak reference to the activity
         InsertTask(RecordActivity context, Audio audio) {
             activityReference = new WeakReference<>(context);
             this.audio = audio;
         }
 
-        // doInBackground methods runs on a worker thread
         @Override
         protected Boolean doInBackground(Void... objs) {
             activityReference.get().audioDatabase.dao().insertAudio(audio);
             return true;
-        }
-
-        // onPostExecute runs on main thread
-        @Override
-        protected void onPostExecute(Boolean bool) {
-            if (bool) {
-                activityReference.get().setResult(audio, 1);
-            }
         }
 
     }

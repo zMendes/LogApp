@@ -65,8 +65,6 @@ public class ListenAudio extends AppCompatActivity {
         }
 
         play.setOnClickListener(view -> {
-            mediaPlayer.seekTo(0);
-            mediaPlayer.start();
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
             } else {

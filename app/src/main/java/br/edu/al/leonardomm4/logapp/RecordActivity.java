@@ -2,12 +2,14 @@ package br.edu.al.leonardomm4.logapp;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ public class RecordActivity extends AppCompatActivity {
     ImageView record;
     Chronometer chrono;
     ImageView change_mode;
+    View background;
     String mode = "Entrevista";
 
     LinkedList<Audio> audios = new LinkedList<>();
@@ -57,6 +60,7 @@ public class RecordActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
+        background = findViewById(R.id.background);
 
         tag = findViewById(R.id.tag);
         change_mode = findViewById(R.id.change_mode);
@@ -126,13 +130,17 @@ public class RecordActivity extends AppCompatActivity {
             if (entrevista){
                 entrevista = false;
                 mode = "Teste";
-                change_mode.setImageResource(R.drawable.ic_autorenew_green_24dp);
+                change_mode.setImageResource(R.drawable.ic_autorenew_white_24dp);
+                tag.setImageResource(R.drawable.ic_add_circle_outline_blue_24dp);
+                background.setBackgroundColor(Color.parseColor("#AAA5A5"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }
             else{
                 mode = "Entrevista";
                 entrevista = true;
                 change_mode.setImageResource(R.drawable.ic_autorenew_black_24dp);
+                tag.setImageResource(R.drawable.ic_add_circle_outline_green_24dp);
+                background.setBackgroundColor(Color.parseColor("#F5F2F2"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }
 

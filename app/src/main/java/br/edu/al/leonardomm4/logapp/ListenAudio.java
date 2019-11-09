@@ -67,10 +67,11 @@ public class ListenAudio extends AppCompatActivity {
         play.setOnClickListener(view -> {
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
-                play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+                play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             } else {
                 mediaPlayer.start();
-                play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+                play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+
             }
         });
     }

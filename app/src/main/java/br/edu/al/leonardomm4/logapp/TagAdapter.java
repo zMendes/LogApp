@@ -55,7 +55,6 @@ public class TagAdapter extends BaseAdapter {
         tag.setText(audio.getTag());
         timestamp.setText("00:"+audio.getTimestamp() + " seg");
         comment.setText(audio.getComment());
-
         if (audio.getMode().equals("Entrevista")){
         itemView.setBackgroundColor(Color.parseColor("#03b1fc"));}
         else{

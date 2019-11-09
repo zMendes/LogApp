@@ -64,12 +64,24 @@ public class Audio implements Serializable {
     @ColumnInfo(name="timestamp")
     private String timestamp;
 
-    public  Audio(int id, String audioName, String mode, String tag, String timestamp){
+    @ColumnInfo(name="comment")
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public  Audio(int id, String audioName, String mode, String tag, String timestamp, String comment){
         this.id = id;
         this.audioName=  audioName;
         this.mode = mode;
         this.tag = tag;
         this.timestamp = timestamp;
+        this.comment = comment;
     }
 
 }

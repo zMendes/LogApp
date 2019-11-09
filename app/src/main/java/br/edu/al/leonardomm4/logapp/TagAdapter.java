@@ -2,6 +2,7 @@ package br.edu.al.leonardomm4.logapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,17 @@ public class TagAdapter extends BaseAdapter {
         itemView   = (itemView ==null) ? inflater.inflate(R.layout.list_item, null): itemView;
         TextView tag = itemView.findViewById(R.id.tag);
         TextView timestamp = itemView.findViewById(R.id.timestamp);
+        TextView comment = itemView.findViewById(R.id.comment);
         Audio audio     = audios.get(i);
         tag.setText(audio.getTag());
         timestamp.setText("00:"+audio.getTimestamp() + " seg");
+        comment.setText(audio.getComment());
+
+        if (audio.getMode().equals("Entrevista")){
+        itemView.setBackgroundColor(Color.parseColor("#03b1fc"));}
+        else{
+            itemView.setBackgroundColor(Color.parseColor("#03fc62"));
+        }
 
         itemView.setOnClickListener(view1 ->{
             if (mediaPlayer.isPlaying()){

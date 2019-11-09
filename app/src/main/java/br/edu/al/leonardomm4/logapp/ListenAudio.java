@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ListenAudio extends AppCompatActivity {
 
-    Button play;
+    ImageView play;
     MediaPlayer mediaPlayer;
 
     AudioDatabase audioDatabase;
@@ -67,8 +67,10 @@ public class ListenAudio extends AppCompatActivity {
         play.setOnClickListener(view -> {
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
+                play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
             } else {
                 mediaPlayer.start();
+                play.setImageResource(R.drawable.ic_play_arrow_black_24dp);
             }
         });
     }

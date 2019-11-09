@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -78,9 +79,11 @@ public class RecordActivity extends AppCompatActivity {
         tag.setOnClickListener(view -> openDialog());
 
 
+
         record.setOnClickListener(view -> {
             if (title.getText().toString().isEmpty()) {
-                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + date.toString() + "audio.3gp";
+                UUID uuid = UUID.randomUUID();
+                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  uuid.toString()+ "audio.3gp";
             } else {
                 mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
             }
@@ -206,7 +209,6 @@ public class RecordActivity extends AppCompatActivity {
 
         Audio audio = new Audio(0, title.getText().toString(), mode, tag, timestamp);
         audios.add(audio);
-            //new InsertTask(RecordActivity.this, audio).execute();
     }
 
 }

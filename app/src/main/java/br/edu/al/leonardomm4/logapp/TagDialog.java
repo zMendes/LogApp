@@ -44,8 +44,12 @@ public class TagDialog extends AppCompatDialogFragment {
                     recordActivity.dialogOk(selected, fname.getText().toString());
 
         });
-        if (recordActivity.entrevista){ builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);}
-        else{  builder.setSingleChoiceItems(test, 0, (a, i) -> selected = test[i]);}
+        if (recordActivity.entrevista){
+            selected = "Pains";
+            builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);}
+        else{
+            selected = "Likes";
+            builder.setSingleChoiceItems(test, 0, (a, i) -> selected = test[i]);}
         return builder.create();
     }
 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -37,7 +38,7 @@ public class RecordActivity extends AppCompatActivity {
     Chronometer chrono;
     ImageView change_mode;
     String mode = "Entrevista";
-
+    String timestamp;
     LinkedList<Audio> audios = new LinkedList<>();
 
     private AudioDatabase audioDatabase;
@@ -78,9 +79,11 @@ public class RecordActivity extends AppCompatActivity {
         tag.setOnClickListener(view -> openDialog());
 
 
+
         record.setOnClickListener(view -> {
             if (title.getText().toString().isEmpty()) {
-                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + date.toString() + "audio.3gp";
+                UUID uuid = UUID.randomUUID();
+                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  uuid.toString()+ "audio.3gp";
             } else {
                 mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
             }
@@ -162,6 +165,7 @@ public class RecordActivity extends AppCompatActivity {
 
     private void openDialog() {
         TagDialog tag = new TagDialog(this);
+        timestamp = ""+ ((SystemClock.elapsedRealtime()- chrono.getBase())/1000);
 
         tag.show(getSupportFragmentManager(), "Tag");
     }
@@ -203,9 +207,8 @@ public class RecordActivity extends AppCompatActivity {
     public void dialogOk(String tag, String texto) {
         Toast.makeText(this, " Tag adicionada." + texto, Toast.LENGTH_SHORT).show();
 
-        Audio audio = new Audio(0, title.getText().toString(), mode, tag, ""+((SystemClock.elapsedRealtime()- chrono.getBase())/1000));
+        Audio audio = new Audio(0, title.getText().toString(), mode, tag, timestamp);
         audios.add(audio);
-        //new InsertTask(RecordActivity.this, audio).execute();
     }
 
 }

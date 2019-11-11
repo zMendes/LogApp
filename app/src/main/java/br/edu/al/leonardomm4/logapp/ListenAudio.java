@@ -45,9 +45,9 @@ public class ListenAudio extends AppCompatActivity {
         System.out.println(audioId+ "id ringht");
         System.out.println(id + "nome do audioTag");
         List<Audio> tags = audioDatabase.dao().getTags(audioId);;
+
         for (Audio audio: tags){
             lista.add(audio);
-            System.out.println("Dentro  do for de audios");
             System.out.println(audio.getAudioName() +" " + audio.getTag()+ "  " + audio.getTimestamp());
         }
 

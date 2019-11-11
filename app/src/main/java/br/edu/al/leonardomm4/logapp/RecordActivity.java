@@ -43,7 +43,7 @@ public class RecordActivity extends AppCompatActivity {
     String mode = "Entrevista";
     String timestamp;
     LinkedList<Audio> audios = new LinkedList<>();
-
+    String titleStr;
     private AudioDatabase audioDatabase;
 
 
@@ -85,12 +85,7 @@ public class RecordActivity extends AppCompatActivity {
 
 
         record.setOnClickListener(view -> {
-            if (title.getText().toString().isEmpty()) {
-                UUID uuid = UUID.randomUUID();
-                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  uuid.toString()+ "audio.3gp";
-            } else {
-                mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
-            }
+
             if (checkPermissions()) {
                 //start recording
                 if (recording) {
@@ -101,10 +96,19 @@ public class RecordActivity extends AppCompatActivity {
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
                     for (Audio audio: audios) {
+                        System.out.println(audio.getAudioName() + "          TESTE     " + audio.getTimestamp());
                         new InsertTask(RecordActivity.this, audio).execute();
                     }
 
                 } else {
+                    if (title.getText().toString().isEmpty()) {
+                        UUID uuid = UUID.randomUUID();
+                        titleStr = uuid.toString();
+                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  titleStr + ".3gp";
+                    } else {
+                        titleStr = title.getText().toString();
+                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
+                    }
 
                     mRecorder = new MediaRecorder();
                     chrono.setBase(SystemClock.elapsedRealtime());
@@ -215,7 +219,7 @@ public class RecordActivity extends AppCompatActivity {
     public void dialogOk(String tag, String texto) {
         Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
 
-        Audio audio = new Audio(0, title.getText().toString(), mode, tag, timestamp, texto);
+        Audio audio = new Audio(0, titleStr, mode, tag, timestamp, texto);
         audios.add(audio);
     }
 

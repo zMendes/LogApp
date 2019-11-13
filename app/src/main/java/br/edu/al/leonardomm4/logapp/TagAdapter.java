@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TagAdapter extends BaseAdapter {
 
@@ -20,6 +24,9 @@ public class TagAdapter extends BaseAdapter {
 
     MediaPlayer mediaPlayer;
 
+    DateFormat  formatter;
+
+
     private static LayoutInflater inflater= null;
 
     public  TagAdapter(Activity context, List<Audio> audios, MediaPlayer mediaPlayer){
@@ -27,6 +34,7 @@ public class TagAdapter extends BaseAdapter {
         this.context = context;
         this.mediaPlayer = mediaPlayer;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        formatter = new SimpleDateFormat("mm:ss", Locale.US);
     }
 
     @Override
@@ -53,7 +61,9 @@ public class TagAdapter extends BaseAdapter {
         TextView comment = itemView.findViewById(R.id.comment);
         Audio audio     = audios.get(i);
         tag.setText(audio.getTag());
-        timestamp.setText("00:"+audio.getTimestamp() + " seg");
+
+        String text = formatter.format(new Date(Integer.parseInt(audio.getTimestamp())*1000));
+        timestamp.setText(text);
         comment.setText(audio.getComment());
         if (audio.getMode().equals("Entrevista")){
         itemView.setBackgroundColor(Color.parseColor("#03b1fc"));}

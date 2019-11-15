@@ -23,6 +23,9 @@ import java.util.Locale;
 public class ListenAudio extends AppCompatActivity {
 
     ImageView play;
+    ImageView forward;
+    ImageView replay;
+    TextView title;
     MediaPlayer mediaPlayer;
 
     AudioDatabase audioDatabase;
@@ -30,6 +33,8 @@ public class ListenAudio extends AppCompatActivity {
     private SeekBar seekBar;
     private Runnable runnable;
     private Handler handler;
+
+
 
     private TextView maxx;
     private TextView chrono;
@@ -40,6 +45,9 @@ public class ListenAudio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listen_audio);
         play = findViewById(R.id.play);
+        forward = findViewById(R.id.forward);
+        replay = findViewById(R.id.replay);
+        title = findViewById(R.id.title);
         listView =  findViewById(R.id.lista);
         seekBar = findViewById(R.id.seek);
         chrono = findViewById(R.id.chrono);
@@ -63,15 +71,19 @@ public class ListenAudio extends AppCompatActivity {
         System.out.println(audioId+ "id ringht");
         System.out.println(id + "nome do audioTag");
         List<Audio> tags = audioDatabase.dao().getTags(audioId);;
+        title.setText(audioId);
 
         for (Audio audio: tags){
             lista.add(audio);
-            System.out.println(audio.getAudioName() +" " + audio.getTag()+ "  " + audio.getTimestamp());
         }
+
 
         TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer);
 
-        //ArrayAdapter<   Audio> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lista);
+
+
+
+
         listView.setAdapter(adapter); //Set all the file in the list.
 
         String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
@@ -100,6 +112,14 @@ public class ListenAudio extends AppCompatActivity {
             }
         });
 
+        forward.setOnClickListener(view -> {
+            mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 10000);
+        });
+
+        replay.setOnClickListener(view -> {
+            mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 10000);
+        });
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -124,16 +144,15 @@ public class ListenAudio extends AppCompatActivity {
         seekBar.setProgress((mediaPlayer.getCurrentPosition()));
 
         if (mediaPlayer.isPlaying()){
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    changeSeekBar();
-                    String text = formatter.format(new Date(mediaPlayer.getCurrentPosition()));
-                    chrono.setText(text);
+            runnable = () -> {
+                changeSeekBar();
+                String text = formatter.format(new Date(mediaPlayer.getCurrentPosition()));
+                chrono.setText(text);
 
-                }
             };
+
             handler.postDelayed(runnable, 10);
-        }
+        } else{
+            play.setImageResource(R.drawable.ic_play_arrow_black_24dp);}
     }
 }

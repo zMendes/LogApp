@@ -29,6 +29,8 @@ public class RecordActivity extends AppCompatActivity {
 
     private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
+
+
     ImageView audilog;
     ImageView tag;
     ImageView record;

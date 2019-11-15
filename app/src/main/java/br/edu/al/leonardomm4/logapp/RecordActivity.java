@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.UUID;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -47,7 +46,7 @@ public class RecordActivity extends AppCompatActivity {
     private AudioDatabase audioDatabase;
 
 
-    private MediaRecorder mRecorder;
+    public MediaRecorder mRecorder;
     private static String mFileName;
     boolean recording = false;
     boolean entrevista = true;
@@ -89,33 +88,19 @@ public class RecordActivity extends AppCompatActivity {
             if (checkPermissions()) {
                 //start recording
                 if (recording) {
-                    mRecorder.stop();
-                    mRecorder.release();
+                    openAudioDialog();
                     invert();
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
-                    for (Audio audio: audios) {
-                        System.out.println(audio.getAudioName() + "          TESTE     " + audio.getTimestamp());
-                        new InsertTask(RecordActivity.this, audio).execute();
-                    }
 
                 } else {
-                    if (title.getText().toString().isEmpty()) {
-                        UUID uuid = UUID.randomUUID();
-                        titleStr = uuid.toString();
-                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  titleStr + ".3gp";
-                    } else {
-                        titleStr = title.getText().toString();
-                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
-                    }
 
                     mRecorder = new MediaRecorder();
                     chrono.setBase(SystemClock.elapsedRealtime());
                     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                     mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                    mRecorder.setOutputFile(mFileName);
                     try {
                         mRecorder.prepare();
                         mRecorder.start();
@@ -197,7 +182,7 @@ public class RecordActivity extends AppCompatActivity {
     }
 
 
-    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
+    public static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
         private WeakReference<RecordActivity> activityReference;
         private Audio audio;
@@ -219,8 +204,16 @@ public class RecordActivity extends AppCompatActivity {
     public void dialogOk(String tag, String texto) {
         Toast.makeText(this, " Tag adicionada.", Toast.LENGTH_SHORT).show();
 
-        Audio audio = new Audio(0, titleStr, mode, tag, timestamp, texto);
+        Audio audio = new Audio(0, "", mode, tag, timestamp, texto);
         audios.add(audio);
+    }
+
+    public void openAudioDialog(){
+        AudioNameDialog audioDialog = new AudioNameDialog(this);
+
+        audioDialog.show(getSupportFragmentManager(), "Nome do audio");
+
+
     }
 
 }

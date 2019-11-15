@@ -8,10 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -20,11 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.UUID;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -33,7 +29,6 @@ public class RecordActivity extends AppCompatActivity {
 
     private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
-    EditText title;
     ImageView audilog;
     ImageView tag;
     ImageView record;
@@ -47,8 +42,8 @@ public class RecordActivity extends AppCompatActivity {
     private AudioDatabase audioDatabase;
 
 
-    private MediaRecorder mRecorder;
-    private static String mFileName;
+    public MediaRecorder mRecorder;
+    public static String mFileName;
     boolean recording = false;
     boolean entrevista = true;
 
@@ -58,7 +53,6 @@ public class RecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        title = findViewById(R.id.title);
         record = findViewById(R.id.record);
         audilog = findViewById(R.id.audiolog);
         background = findViewById(R.id.background);
@@ -101,32 +95,8 @@ public class RecordActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    if (title.getText().toString().isEmpty()) {
-                        UUID uuid = UUID.randomUUID();
-                        titleStr = uuid.toString();
-                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" +  titleStr + ".3gp";
-                    } else {
-                        titleStr = title.getText().toString();
-                        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
+                    openAudioDialog();
                     }
-
-                    mRecorder = new MediaRecorder();
-                    chrono.setBase(SystemClock.elapsedRealtime());
-                    mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                    mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                    mRecorder.setOutputFile(mFileName);
-                    try {
-                        mRecorder.prepare();
-                        mRecorder.start();
-                        chrono.start();
-                        record.setImageResource(R.drawable.ic_fiber_manual_record_black_24dp);
-                    } catch (IOException e) {
-                        Log.e("AudioRecording", "prepare() failed");
-                    }
-                    Toast.makeText(getApplicationContext(), "Recording Started", Toast.LENGTH_LONG).show();
-                    invert();
-                }
             } else {
                 requestPermissions();
             }
@@ -197,7 +167,7 @@ public class RecordActivity extends AppCompatActivity {
     }
 
 
-    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
+    public static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
         private WeakReference<RecordActivity> activityReference;
         private Audio audio;
@@ -221,6 +191,14 @@ public class RecordActivity extends AppCompatActivity {
 
         Audio audio = new Audio(0, titleStr, mode, tag, timestamp, texto);
         audios.add(audio);
+    }
+
+    public void openAudioDialog(){
+        AudioNameDialog audioDialog = new AudioNameDialog(this);
+
+        audioDialog.show(getSupportFragmentManager(), "Nome do audio");
+
+
     }
 
 }

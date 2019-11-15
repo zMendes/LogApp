@@ -2,15 +2,20 @@ package br.edu.al.leonardomm4.logapp;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class AudioNameDialog extends AppCompatDialogFragment {
@@ -33,17 +38,27 @@ public class AudioNameDialog extends AppCompatDialogFragment {
 
         builder.setView(view).setTitle("Título").setNegativeButton("Cancel", ((dialogInterface, i) -> {}))
                 .setPositiveButton("Ok", ((dialogInterface, i) -> {
-                    String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + title.getText().toString() + ".3gp";
-                    recordActivity.mRecorder.setOutputFile(mFileName);
-                    recordActivity.mRecorder.stop();
-                    recordActivity.mRecorder.release();
-                    for (Audio audio: recordActivity.audios) {
-                        audio.setAudioName(title.getText().toString());
-                        //System.out.println(audio.getAudioName() + "          TESTE     " + audio.getTimestamp());
-                        new RecordActivity.InsertTask(recordActivity, audio).execute();
+                    recordActivity.titleStr = title.getText().toString();
+                    recordActivity.mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + recordActivity.titleStr+ ".3gp";
+                    recordActivity.mRecorder = new MediaRecorder();
+                    recordActivity.chrono.setBase(SystemClock.elapsedRealtime());
+                    recordActivity.mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    recordActivity.mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                    recordActivity.mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                    recordActivity.mRecorder.setOutputFile(recordActivity.mFileName);
+                    try {
+                        recordActivity.mRecorder.prepare();
+                        recordActivity.mRecorder.start();
+                        recordActivity.chrono.start();
+                        recordActivity.record.setImageResource(R.drawable.ic_fiber_manual_record_black_24dp);
+                    } catch (IOException e) {
+                        Log.e("AudioRecording", "prepare() failed");
                     }
+                    Toast.makeText(recordActivity.getApplicationContext(), "Recording Started", Toast.LENGTH_LONG).show();
+                    recordActivity.invert();
 
-        }));
+
+                }));
 
 
 

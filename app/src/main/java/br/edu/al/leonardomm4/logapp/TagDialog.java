@@ -14,9 +14,9 @@ import java.util.Objects;
 public class TagDialog extends AppCompatDialogFragment {
     EditText fname;
     private String selected = "";
-    private  RecordActivity recordActivity;
+    private RecordActivity recordActivity;
 
-    public TagDialog(RecordActivity recordActivity){
+    public TagDialog(RecordActivity recordActivity) {
         this.recordActivity = recordActivity;
 
     }
@@ -33,7 +33,7 @@ public class TagDialog extends AppCompatDialogFragment {
         fname = view.findViewById(R.id.fname);
 
 
-        String[] interview= new String[]{"Pains", "Gains", "Jobs"};
+        String[] interview = new String[]{"Pains", "Gains", "Jobs"};
         String[] test = new String[]{"Likes", "Critics", "Ideas", "Doubts"};
 
 
@@ -41,18 +41,18 @@ public class TagDialog extends AppCompatDialogFragment {
                 .setTitle("Tags")
                 .setNegativeButton("Cancel", (dialogInterface, i) -> {
                 }).setPositiveButton("ok", (dialogInterface, i) -> {
-                    recordActivity.dialogOk(selected, fname.getText().toString());
+            recordActivity.dialogOk(selected, fname.getText().toString());
 
         });
-        if (recordActivity.entrevista){
+        if (recordActivity.entrevista) {
             selected = "Pains";
-            builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);}
-        else{
+            builder.setSingleChoiceItems(interview, 0, (a, i) -> selected = interview[i]);
+        } else {
             selected = "Likes";
-            builder.setSingleChoiceItems(test, 0, (a, i) -> selected = test[i]);}
+            builder.setSingleChoiceItems(test, 0, (a, i) -> selected = test[i]);
+        }
         return builder.create();
     }
-
 
 
 }

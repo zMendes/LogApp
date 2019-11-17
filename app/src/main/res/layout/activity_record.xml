@@ -9,8 +9,6 @@
     tools:context=".RecordActivity">
 
 
-
-
     <ImageView
         android:id="@+id/record"
         android:layout_width="wrap_content"

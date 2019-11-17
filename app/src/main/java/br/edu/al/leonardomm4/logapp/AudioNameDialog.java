@@ -24,8 +24,8 @@ public class AudioNameDialog extends AppCompatDialogFragment {
 
     private RecordActivity recordActivity;
 
-    public AudioNameDialog(RecordActivity recordActivity){
-        this.recordActivity  = recordActivity;
+    public AudioNameDialog(RecordActivity recordActivity) {
+        this.recordActivity = recordActivity;
     }
 
     @Override
@@ -36,10 +36,11 @@ public class AudioNameDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.audio_dialog, null);
         title = view.findViewById(R.id.title);
 
-        builder.setView(view).setTitle("Título").setNegativeButton("Cancel", ((dialogInterface, i) -> {}))
+        builder.setView(view).setTitle("Título").setNegativeButton("Cancel", ((dialogInterface, i) -> {
+        }))
                 .setPositiveButton("Ok", ((dialogInterface, i) -> {
                     recordActivity.titleStr = title.getText().toString();
-                    recordActivity.mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + recordActivity.titleStr+ ".3gp";
+                    recordActivity.mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp" + "/" + recordActivity.titleStr + ".3gp";
                     recordActivity.mRecorder = new MediaRecorder();
                     recordActivity.chrono.setBase(SystemClock.elapsedRealtime());
                     recordActivity.mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -61,9 +62,7 @@ public class AudioNameDialog extends AppCompatDialogFragment {
                 }));
 
 
-
         return builder.create();
-
 
 
     }

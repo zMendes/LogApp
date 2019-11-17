@@ -8,23 +8,23 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {Audio.class}, exportSchema = false, version = 1)
 public abstract class AudioDatabase extends RoomDatabase {
+    private static AudioDatabase audioDB;
     private String DB_NAME = "audio.db";
 
-    public abstract AudioDAO dao();
-
-    private static  AudioDatabase audioDB;
-
-    public static AudioDatabase getInstance(Context context){
-        if (audioDB ==null){
+    public static AudioDatabase getInstance(Context context) {
+        if (audioDB == null) {
             audioDB = buildDatabaseInstance(context);
         }
         return audioDB;
     }
-    private static AudioDatabase buildDatabaseInstance(Context context){
-        return Room.databaseBuilder(context,AudioDatabase.class, "audio.db").allowMainThreadQueries().build();
+
+    private static AudioDatabase buildDatabaseInstance(Context context) {
+        return Room.databaseBuilder(context, AudioDatabase.class, "audio.db").allowMainThreadQueries().build();
     }
 
-    public void cleanUp(){
+    public abstract AudioDAO dao();
+
+    public void cleanUp() {
         audioDB = null;
     }
-    }
+}

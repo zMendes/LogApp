@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         audio_button = findViewById(R.id.audio);
         audio_log = findViewById(R.id.audios);
 
-        audio_button.setOnClickListener(view ->{
+        audio_button.setOnClickListener(view -> {
             Intent intent = new Intent(this, RecordActivity.class);
             startActivity(intent);
         });

@@ -25,14 +25,16 @@ public class TagAdapter extends BaseAdapter {
     MediaPlayer mediaPlayer;
 
     DateFormat  formatter;
+    ListenAudio listenAudio;
 
 
     private static LayoutInflater inflater= null;
 
-    public  TagAdapter(Activity context, List<Audio> audios, MediaPlayer mediaPlayer){
+    public  TagAdapter(Activity context, List<Audio> audios, MediaPlayer mediaPlayer, ListenAudio listenAudio){
         this.audios = audios;
         this.context = context;
         this.mediaPlayer = mediaPlayer;
+        this.listenAudio = listenAudio;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         formatter = new SimpleDateFormat("mm:ss", Locale.US);
     }
@@ -72,11 +74,16 @@ public class TagAdapter extends BaseAdapter {
         }
 
         itemView.setOnClickListener(view1 ->{
+
+            listenAudio.play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+
+
             if (mediaPlayer.isPlaying()){
             mediaPlayer.seekTo(Integer.parseInt(audio.getTimestamp())*1000);
             }
             else {
                 mediaPlayer.start();
+                listenAudio.changeSeekBar();
                 mediaPlayer.seekTo(Integer.parseInt(audio.getTimestamp())*1000);
             }
         });

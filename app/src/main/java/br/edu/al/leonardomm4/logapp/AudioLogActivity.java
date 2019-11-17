@@ -28,7 +28,7 @@ public class AudioLogActivity extends AppCompatActivity {
         audioDatabase = AudioDatabase.getInstance(AudioLogActivity.this);
 
         File directory = Environment.getExternalStorageDirectory();
-        file = new File( directory + "/logApp" );
+        file = new File(directory + "/logApp");
         File list[] = file.listFiles();
 
         for (File value : list) {
@@ -47,7 +47,6 @@ public class AudioLogActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

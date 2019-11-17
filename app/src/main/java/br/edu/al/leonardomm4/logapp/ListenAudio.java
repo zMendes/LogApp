@@ -1,6 +1,8 @@
 package br.edu.al.leonardomm4.logapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +30,7 @@ public class ListenAudio extends AppCompatActivity {
     ImageView replay;
     TextView title;
     MediaPlayer mediaPlayer;
+    ImageView image;
 
     AudioDatabase audioDatabase;
     ListView listView;
@@ -52,6 +56,7 @@ public class ListenAudio extends AppCompatActivity {
         seekBar = findViewById(R.id.seek);
         chrono = findViewById(R.id.chrono);
         maxx = findViewById(R.id.max);
+        image = findViewById(R.id.pic);
 
         mediaPlayer = new MediaPlayer();
         audioDatabase = AudioDatabase.getInstance(ListenAudio.this);
@@ -70,21 +75,26 @@ public class ListenAudio extends AppCompatActivity {
         String audioId=  id.substring(0,id.length()-4);
         System.out.println(audioId+ "id ringht");
         System.out.println(id + "nome do audioTag");
-        List<Audio> tags = audioDatabase.dao().getTags(audioId);;
+        List<Audio> tags = audioDatabase.dao().getTags(audioId);
         title.setText(audioId);
 
         for (Audio audio: tags){
-            lista.add(audio);
+            if (audio.getImage() != null){
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(audio.getImage());
+                Bitmap bitmap= BitmapFactory.decodeStream(imageStream);
+                image.setImageBitmap(bitmap);
+            } else {
+            lista.add(audio);}
         }
 
 
-        TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer);
+        TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer, this);
 
 
 
 
 
-        listView.setAdapter(adapter); //Set all the file in the list.
+        listView.setAdapter(adapter);
 
         String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
         try {
@@ -140,7 +150,7 @@ public class ListenAudio extends AppCompatActivity {
         });
     }
 
-    private void changeSeekBar() {
+    public void changeSeekBar() {
         seekBar.setProgress((mediaPlayer.getCurrentPosition()));
 
         if (mediaPlayer.isPlaying()){

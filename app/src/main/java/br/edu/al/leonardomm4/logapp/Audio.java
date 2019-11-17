@@ -1,5 +1,6 @@
 package br.edu.al.leonardomm4.logapp;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,11 +13,43 @@ public class Audio implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name="audioName")
+    @ColumnInfo(name = "audioName")
     private String audioName;
 
-    @ColumnInfo(name="Mode")
-    private  String mode;
+    @ColumnInfo(name = "Mode")
+    @Nullable
+    private String mode;
+    @ColumnInfo(name = "tag")
+    private String tag;
+
+    @ColumnInfo(name = "timestamp")
+    @Nullable
+    private String timestamp;
+    @ColumnInfo(name = "comment")
+    @Nullable
+    private String comment;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    @Nullable
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public Audio(int id, String audioName, String mode, String tag, String timestamp, String comment, byte[] image) {
+        this.id = id;
+        this.audioName = audioName;
+        this.mode = mode;
+        this.tag = tag;
+        this.timestamp = timestamp;
+        this.comment = comment;
+        this.image = image;
+    }
 
     public int getId() {
         return id;
@@ -58,29 +91,11 @@ public class Audio implements Serializable {
         this.timestamp = timestamp;
     }
 
-    @ColumnInfo(name="tag")
-    private String tag;
-
-    @ColumnInfo(name="timestamp")
-    private String timestamp;
-
-    @ColumnInfo(name="comment")
-    private String comment;
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public  Audio(int id, String audioName, String mode, String tag, String timestamp, String comment){
-        this.id = id;
-        this.audioName=  audioName;
-        this.mode = mode;
-        this.tag = tag;
-        this.timestamp = timestamp;
         this.comment = comment;
     }
 

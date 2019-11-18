@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -38,10 +39,10 @@ public class RecordActivity extends AppCompatActivity {
     public static String mFileName;
     public MediaRecorder mRecorder;
     ImageView audilog;
-    ImageView tag;
+    Button tag;
     ImageView record;
     Chronometer chrono;
-    ImageView change_mode;
+    Button change_mode;
     View background;
     String mode = "Entrevista";
     String timestamp;
@@ -110,15 +111,17 @@ public class RecordActivity extends AppCompatActivity {
             if (entrevista) {
                 entrevista = false;
                 mode = "Teste";
-                change_mode.setImageResource(R.drawable.ic_autorenew_white_24dp);
-                tag.setImageResource(R.drawable.ic_add_circle_outline_blue_24dp);
+                change_mode.setText("Test");
+                change_mode.setBackgroundColor(Color.parseColor("#F5F2F2"));
+                tag.setBackgroundColor(Color.parseColor("#030d9c"));
                 background.setBackgroundColor(Color.parseColor("#AAA5A5"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             } else {
                 mode = "Entrevista";
                 entrevista = true;
-                change_mode.setImageResource(R.drawable.ic_autorenew_black_24dp);
-                tag.setImageResource(R.drawable.ic_add_circle_outline_green_24dp);
+                change_mode.setText("Entrevista");
+                change_mode.setBackgroundColor(Color.parseColor("#AAA5A5"));
+                tag.setBackgroundColor(Color.parseColor("#F03ED623"));
                 background.setBackgroundColor(Color.parseColor("#F5F2F2"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }

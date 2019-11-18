@@ -44,29 +44,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.086" />
 
-    <ImageView
+    <Button
         android:id="@+id/change_mode"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="Entrevista"
+        android:background="#AAA5A5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.743"
-        app:srcCompat="@drawable/ic_autorenew_black_24dp" />
+        app:layout_constraintEnd_toStartOf="@+id/tag"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <Button
         android:id="@+id/tag"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="#00000000"
-        android:src="@drawable/ic_add_circle_outline_green_24dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="Tags"
+        android:background="#F03ED623"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.598"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.743" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/change_mode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

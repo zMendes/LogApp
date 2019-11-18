@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         audio_log.setOnClickListener(view -> {
-            Intent intent = new Intent(this, AudioLogActivity.class);
+            Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
         });
     }

@@ -11,7 +11,6 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ListenAudio"></activity>
+        <activity android:name=".MenuAudioActivity"></activity>
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ListenAudio" />
         <activity android:name=".AudioLogActivity" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".MainActivity">
@@ -41,8 +42,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
     </application>
 
 </manifest>

@@ -17,18 +17,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.219" />
+        app:layout_constraintVertical_bias="0.224" />
 
     <ImageView
         android:id="@+id/audio"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="24dp"
         android:scrollbarSize="4dp"
         android:src="@drawable/ic_mic_black_24dp"
         android:text="Audio"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.529" />
 
@@ -38,21 +39,24 @@
         android:layout_height="100dp"
         android:src="@drawable/ic_videocam_black_24dp"
         android:text="Video"
-        app:layout_constraintBottom_toBottomOf="@+id/audios"
-        app:layout_constraintEnd_toStartOf="@+id/audios"
-        app:layout_constraintStart_toEndOf="@+id/audio"
-        app:layout_constraintTop_toTopOf="@+id/audios" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.529" />
 
     <ImageView
         android:id="@+id/audios"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="58dp"
+        android:layout_height="62dp"
         android:src="@drawable/ic_format_list_bulleted_black_24dp"
         android:text="Video"
-        app:layout_constraintBottom_toBottomOf="@+id/audio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/audio"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

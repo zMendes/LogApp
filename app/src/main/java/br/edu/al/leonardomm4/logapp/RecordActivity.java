@@ -74,7 +74,7 @@ public class RecordActivity extends AppCompatActivity {
 
 
         audilog.setOnClickListener(view -> {
-            Intent intent = new Intent(this, AudioLogActivity.class);
+            Intent intent = new Intent(this, MenuAudioActivity.class);
             startActivity(intent);
         });
 

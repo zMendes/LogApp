@@ -1,5 +1,6 @@
 package br.edu.al.leonardomm4.logapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,8 +8,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -52,7 +56,7 @@ public class ListenAudio extends AppCompatActivity {
         forward = findViewById(R.id.forward);
         replay = findViewById(R.id.replay);
         title = findViewById(R.id.title);
-        listView =  findViewById(R.id.lista);
+        ScrollView listView = (ScrollView) findViewById(R.id.scroll);
         seekBar = findViewById(R.id.seek);
         chrono = findViewById(R.id.chrono);
         maxx = findViewById(R.id.max);
@@ -60,7 +64,6 @@ public class ListenAudio extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
         audioDatabase = AudioDatabase.getInstance(ListenAudio.this);
-
         handler = new Handler();
 
 
@@ -96,14 +99,14 @@ public class ListenAudio extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-        String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
-        try {
-            mediaPlayer.setDataSource(path);
-            mediaPlayer.prepare();
-            seekBar.setMax(mediaPlayer.getDuration());
-            String max= formatter.format(new Date(mediaPlayer.getDuration()));
-            maxx.setText(max);
-            chrono.setText("00:00");
+            String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
+            try {
+                mediaPlayer.setDataSource(path);
+                mediaPlayer.prepare();
+                seekBar.setMax(mediaPlayer.getDuration());
+                String max= formatter.format(new Date(mediaPlayer.getDuration()));
+                maxx.setText(max);
+                chrono.setText("00:00");
 
 
         } catch (IOException e) {

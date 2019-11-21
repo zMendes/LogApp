@@ -1,6 +1,5 @@
 package br.edu.al.leonardomm4.logapp;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,15 +7,13 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,11 +34,12 @@ public class ListenAudio extends AppCompatActivity {
     ImageView image;
 
     AudioDatabase audioDatabase;
-    ListView listView;
+    //ListView listView;
     private SeekBar seekBar;
     private Runnable runnable;
     private Handler handler;
 
+    RecyclerView recyclerView;
 
 
     private TextView maxx;
@@ -56,7 +54,6 @@ public class ListenAudio extends AppCompatActivity {
         forward = findViewById(R.id.forward);
         replay = findViewById(R.id.replay);
         title = findViewById(R.id.title);
-        ScrollView listView = (ScrollView) findViewById(R.id.scroll);
         seekBar = findViewById(R.id.seek);
         chrono = findViewById(R.id.chrono);
         maxx = findViewById(R.id.max);
@@ -69,7 +66,7 @@ public class ListenAudio extends AppCompatActivity {
 
         List<Audio> lista = new ArrayList<>();
 
-
+        recyclerView = findViewById(R.id.recycler_view);
 
         Intent intent = getIntent();
 
@@ -91,13 +88,15 @@ public class ListenAudio extends AppCompatActivity {
         }
 
 
-        TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer, this);
+        RecyclerAdapter adapter = new RecyclerAdapter(this, lista, mediaPlayer, this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(layoutManager);
 
 
-
-
-
-        listView.setAdapter(adapter);
 
             String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
             try {

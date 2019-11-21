@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -33,11 +34,12 @@ public class ListenAudio extends AppCompatActivity {
     ImageView image;
 
     AudioDatabase audioDatabase;
-    ListView listView;
+    //ListView listView;
     private SeekBar seekBar;
     private Runnable runnable;
     private Handler handler;
 
+    RecyclerView recyclerView;
 
 
     private TextView maxx;
@@ -52,7 +54,6 @@ public class ListenAudio extends AppCompatActivity {
         forward = findViewById(R.id.forward);
         replay = findViewById(R.id.replay);
         title = findViewById(R.id.title);
-        listView =  findViewById(R.id.lista);
         seekBar = findViewById(R.id.seek);
         chrono = findViewById(R.id.chrono);
         maxx = findViewById(R.id.max);
@@ -60,13 +61,12 @@ public class ListenAudio extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
         audioDatabase = AudioDatabase.getInstance(ListenAudio.this);
-
         handler = new Handler();
 
 
         List<Audio> lista = new ArrayList<>();
 
-
+        recyclerView = findViewById(R.id.recycler_view);
 
         Intent intent = getIntent();
 
@@ -88,22 +88,24 @@ public class ListenAudio extends AppCompatActivity {
         }
 
 
-        TagAdapter adapter = new TagAdapter(this, lista, mediaPlayer, this);
+        RecyclerAdapter adapter = new RecyclerAdapter(this, lista, mediaPlayer, this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(layoutManager);
 
 
 
-
-
-        listView.setAdapter(adapter);
-
-        String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
-        try {
-            mediaPlayer.setDataSource(path);
-            mediaPlayer.prepare();
-            seekBar.setMax(mediaPlayer.getDuration());
-            String max= formatter.format(new Date(mediaPlayer.getDuration()));
-            maxx.setText(max);
-            chrono.setText("00:00");
+            String  path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/logApp/" + id;
+            try {
+                mediaPlayer.setDataSource(path);
+                mediaPlayer.prepare();
+                seekBar.setMax(mediaPlayer.getDuration());
+                String max= formatter.format(new Date(mediaPlayer.getDuration()));
+                maxx.setText(max);
+                chrono.setText("00:00");
 
 
         } catch (IOException e) {

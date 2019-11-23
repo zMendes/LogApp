@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Date;
 import java.util.LinkedList;
 
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -57,6 +56,8 @@ public class RecordActivity extends AppCompatActivity {
     ImageView pause_play;
     boolean paused = false;
     long timeWhenStopped;
+    ImageView camera;
+    boolean tookPicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,10 @@ public class RecordActivity extends AppCompatActivity {
         chrono = findViewById(R.id.chronometer);
 
         pause_play = findViewById(R.id.play_pause);
+        camera = findViewById(R.id.camera);
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp");
         directory.mkdirs();
 
-        Date date = new Date();
         audioDatabase = AudioDatabase.getInstance(RecordActivity.this);
 
 
@@ -86,6 +87,10 @@ public class RecordActivity extends AppCompatActivity {
         audilog.setOnClickListener(view -> {
             Intent intent = new Intent(this, MenuAudioActivity.class);
             startActivity(intent);
+        });
+
+        camera.setOnClickListener(view -> {
+            takePicture();
         });
 
         tag.setOnClickListener(view -> openDialog());
@@ -117,7 +122,8 @@ public class RecordActivity extends AppCompatActivity {
                     mRecorder.stop();
                     mRecorder.release();
                     invert();
-                    openConfirmDialog();
+                    if (!tookPicture){
+                    openConfirmDialog();}
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
@@ -276,6 +282,7 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void addPicDatabase(byte[] blob) {
+        tookPicture = true;
         Audio audio = new Audio(0,titleStr,mode,null,null,null, blob );
         new InsertTask(RecordActivity.this, audio).execute();
 

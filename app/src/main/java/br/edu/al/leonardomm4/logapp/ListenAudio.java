@@ -1,8 +1,6 @@
 package br.edu.al.leonardomm4.logapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -79,12 +76,7 @@ public class ListenAudio extends AppCompatActivity {
         title.setText(audioId);
 
         for (Audio audio: tags){
-            if (audio.getImage() != null){
-                ByteArrayInputStream imageStream = new ByteArrayInputStream(audio.getImage());
-                Bitmap bitmap= BitmapFactory.decodeStream(imageStream);
-                image.setImageBitmap(bitmap);
-            } else {
-            lista.add(audio);}
+            lista.add(audio);
         }
 
 

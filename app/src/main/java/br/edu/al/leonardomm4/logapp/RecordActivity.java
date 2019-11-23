@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Date;
 import java.util.LinkedList;
 
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -54,6 +53,11 @@ public class RecordActivity extends AppCompatActivity {
     boolean recording = false;
     boolean entrevista = true;
     private AudioDatabase audioDatabase;
+    ImageView pause_play;
+    boolean paused = false;
+    long timeWhenStopped;
+    ImageView camera;
+    boolean tookPicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +74,14 @@ public class RecordActivity extends AppCompatActivity {
         interview_mode = findViewById(R.id.interview_mode);
 
         chrono = findViewById(R.id.chronometer);
+
+        pause_play = findViewById(R.id.play_pause);
+        camera = findViewById(R.id.camera);
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp");
         directory.mkdirs();
 
-        Date date = new Date();
         audioDatabase = AudioDatabase.getInstance(RecordActivity.this);
+
 
 
         audilog.setOnClickListener(view -> {
@@ -82,7 +89,29 @@ public class RecordActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        camera.setOnClickListener(view -> {
+            takePicture();
+        });
+
         tag.setOnClickListener(view -> openDialog());
+
+        pause_play.setOnClickListener(view -> {
+            if (recording){
+                if (!paused){
+                    pause_play.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
+                    mRecorder.pause();
+                    timeWhenStopped = chrono.getBase() - SystemClock.elapsedRealtime();
+                    chrono.stop();
+                    paused = !paused;}
+                else {
+                    pause_play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+                    mRecorder.resume();
+                    chrono.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
+                    chrono.start();
+                    chrono.start();
+                    paused = !paused;}
+            }
+        });
 
 
         record.setOnClickListener(view -> {
@@ -93,9 +122,10 @@ public class RecordActivity extends AppCompatActivity {
                     mRecorder.stop();
                     mRecorder.release();
                     invert();
+                    if (!tookPicture){
+                    openConfirmDialog();}
                     Toast.makeText(getApplicationContext(), "Recording stopped", Toast.LENGTH_LONG).show();
                     chrono.stop();
-                    takePicture();
                     record.setImageResource(R.drawable.ic_fiber_manual_record_red_24dp);
                     for (Audio audio : audios) {
                         new InsertTask(RecordActivity.this, audio).execute();
@@ -114,7 +144,7 @@ public class RecordActivity extends AppCompatActivity {
             if (entrevista) {
                 entrevista = false;
                 mode = "Teste";
-                change_mode.setText("Test");
+                change_mode.setText("Entrevista");
                 interview_mode.setText("Teste");
                 change_mode.setBackgroundColor(Color.parseColor("#F5F2F2"));
                 tag.setBackgroundColor(Color.parseColor("#030d9c"));
@@ -123,7 +153,7 @@ public class RecordActivity extends AppCompatActivity {
             } else {
                 mode = "Entrevista";
                 entrevista = true;
-                change_mode.setText("Entrevista");
+                change_mode.setText("Teste");
                 interview_mode.setText("Entrevista");
                 change_mode.setBackgroundColor(Color.parseColor("#AAA5A5"));
                 tag.setBackgroundColor(Color.parseColor("#F03ED623"));
@@ -137,7 +167,7 @@ public class RecordActivity extends AppCompatActivity {
 
     }
 
-    private void takePicture() {
+    public void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(getPackageManager()) == null) {
@@ -218,6 +248,8 @@ public class RecordActivity extends AppCompatActivity {
     public void openAudioDialog() {
         AudioNameDialog audioDialog = new AudioNameDialog(this);
 
+        pause_play.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+
         audioDialog.show(getSupportFragmentManager(), "Nome do audio");
 
 
@@ -250,6 +282,7 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void addPicDatabase(byte[] blob) {
+        tookPicture = true;
         Audio audio = new Audio(0,titleStr,mode,null,null,null, blob );
         new InsertTask(RecordActivity.this, audio).execute();
 
@@ -272,6 +305,10 @@ public class RecordActivity extends AppCompatActivity {
             return true;
         }
 
+    }
+    public void openConfirmDialog(){
+        ConfirmDialog confirmDialog = new ConfirmDialog(this);
+        confirmDialog.show(getSupportFragmentManager(), "Validação");
     }
 }
 

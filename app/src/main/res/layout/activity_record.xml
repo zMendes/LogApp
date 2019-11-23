@@ -48,7 +48,7 @@
         android:id="@+id/change_mode"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="Entrevista"
+        android:text="Test"
         android:background="#AAA5A5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tag"
@@ -63,6 +63,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/change_mode" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:src="@drawable/ic_camera_alt_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/change_mode"
+        app:layout_constraintEnd_toStartOf="@+id/record"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/play_pause"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="200dp"
+        android:src="@drawable/ic_play_circle_filled_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.306"
+        app:layout_constraintStart_toEndOf="@+id/record" />
 
     <TextView
         android:id="@+id/interview_mode"

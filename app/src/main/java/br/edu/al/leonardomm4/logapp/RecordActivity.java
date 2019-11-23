@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class RecordActivity extends AppCompatActivity {
     public MediaRecorder mRecorder;
     ImageView audilog;
     Button tag;
+    TextView interview_mode;
     ImageView record;
     Chronometer chrono;
     Button change_mode;
@@ -65,6 +67,7 @@ public class RecordActivity extends AppCompatActivity {
         tag = findViewById(R.id.tag);
         change_mode = findViewById(R.id.change_mode);
 
+        interview_mode = findViewById(R.id.interview_mode);
 
         chrono = findViewById(R.id.chronometer);
         File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logApp");
@@ -112,6 +115,7 @@ public class RecordActivity extends AppCompatActivity {
                 entrevista = false;
                 mode = "Teste";
                 change_mode.setText("Test");
+                interview_mode.setText("Teste");
                 change_mode.setBackgroundColor(Color.parseColor("#F5F2F2"));
                 tag.setBackgroundColor(Color.parseColor("#030d9c"));
                 background.setBackgroundColor(Color.parseColor("#AAA5A5"));
@@ -120,6 +124,7 @@ public class RecordActivity extends AppCompatActivity {
                 mode = "Entrevista";
                 entrevista = true;
                 change_mode.setText("Entrevista");
+                interview_mode.setText("Entrevista");
                 change_mode.setBackgroundColor(Color.parseColor("#AAA5A5"));
                 tag.setBackgroundColor(Color.parseColor("#F03ED623"));
                 background.setBackgroundColor(Color.parseColor("#F5F2F2"));

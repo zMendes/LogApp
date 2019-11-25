@@ -58,7 +58,7 @@
         android:id="@+id/tag"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="#9ca383"
+        android:background="#52D461"
         android:text="Tags"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

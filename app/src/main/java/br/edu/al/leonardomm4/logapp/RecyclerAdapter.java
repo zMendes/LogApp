@@ -58,9 +58,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.tag.setText(audio.getTag());
 
         if (audio.getMode().equals("Entrevista")){
-            holder.card.setBackgroundColor(Color.parseColor("#03b1fc"));}
+            holder.card.setBackgroundColor(Color.parseColor("#9BAFB5"));}
         else{
-            holder.card.setBackgroundColor(Color.parseColor("#03fc62"));}
+            holder.card.setBackgroundColor(Color.parseColor("#9ca383"));}
         if (audio.getImage() ==null){
         String text = formatter.format(new Date(Integer.parseInt(audio.getTimestamp())*1000));
         holder.timestamp.setText(text);

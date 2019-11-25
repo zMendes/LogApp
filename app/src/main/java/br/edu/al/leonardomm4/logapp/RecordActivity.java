@@ -147,7 +147,7 @@ public class RecordActivity extends AppCompatActivity {
                 change_mode.setText("Entrevista");
                 interview_mode.setText("Teste");
                 change_mode.setBackgroundColor(Color.parseColor("#F5F2F2"));
-                tag.setBackgroundColor(Color.parseColor("#030d9c"));
+                tag.setBackgroundColor(Color.parseColor("#9BAFB5"));
                 background.setBackgroundColor(Color.parseColor("#AAA5A5"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             } else {
@@ -156,7 +156,7 @@ public class RecordActivity extends AppCompatActivity {
                 change_mode.setText("Teste");
                 interview_mode.setText("Entrevista");
                 change_mode.setBackgroundColor(Color.parseColor("#AAA5A5"));
-                tag.setBackgroundColor(Color.parseColor("#F03ED623"));
+                tag.setBackgroundColor(Color.parseColor("#9ca383"));
                 background.setBackgroundColor(Color.parseColor("#F5F2F2"));
                 Toast.makeText(this, mode, Toast.LENGTH_SHORT).show();
             }

@@ -58,8 +58,8 @@
         android:id="@+id/tag"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="#52D461"
         android:text="Tags"
-        android:background="#F03ED623"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/change_mode" />
